@@ -2,7 +2,7 @@
 
 \begin{document}
 
-\title{Minimizing Query Transfer in Distributed IR\titlenote{A summary of previous papers and a suggestion of new ideas}}
+\title{Minimizing Posting List Traversal\titlenote{A summary of previous papers and a suggestion of new ideas}}
 
 \numberofauthors{1} 
 \author{
@@ -14,14 +14,24 @@ Edward Hills\\\affaddr{University of Otago}\\
 
 \maketitle
 \begin{abstract}
-this is the abstract... dont make it too long cuse the intro is next!.
+
+Information Retrieval is primarily concerned with searching through a document collection given a query, and returning a set of documents which could be relevant to the users request. 
+
+This task usually requires searching through the entire document collection to find which documents may be relevant. In large document collections this can be time consuming and costly. This paper looks at ways to minimize the number of documents that are examined but still being effective in returning the documents most likely to be relevant.
+
 \end{abstract}
 
 \section{Introduction}
 
-Blah Blah Blah, talk about the main points that each of the papers produce blah blah blah. then talk about a couple of questions youll bring up.
+Searching through document collections which are large can mean when it comes to query time that all documents that are indexed by one or more of the search terms will be examined. When you have a large document collection such as the TREC terabyte collection, searching every document that is indexed by even a relatively rare term can mean searching through thousands or even millions of documents.
 
-\section{Query Optimization}
+By reducing the amount of documents searched by a particular query you do run the risk of limiting the amount of documents returned which are relevant to the user. Keeping the accuracy of your list returned is a top priority when searching through a minimal amount of documents. 
+
+There are a number of techniques in which the document list traversal can be minimized while still maintaining high accuracy. This paper looks at three techniques, \emph{Index ordering by query-independent measures, Ferguson, Smeaton} which is looking at documents on the web in particular, \emph{The Nearest Neighbour Problem In Information Retrieval, van Rijsbergen, Smeaton} and \emph{Filtered Document Retrieval with Frequency-Sorted Indexes, Persin, Zobel, Sacks-Davis}. 
+
+I will examine document minimization further and discuss the main research questions and contributions of each paper in 2., talk about how these techniques are linked in 3., talk about two new proposals I have come up with in 4., and discuss my final findings in the Conclusion.
+
+\section{Document Minimization}
 
 Briefly touch on the idea of optimizing this
 
