@@ -27,17 +27,39 @@ Searching through document collections which are large can mean when it comes to
 
 By reducing the amount of documents searched by a particular query you do run the risk of limiting the amount of documents returned which are relevant to the user. Keeping the accuracy of your list returned is a top priority when searching through a minimal amount of documents. 
 
-There are a number of techniques in which the document list traversal can be minimized while still maintaining high accuracy. This paper looks at three techniques, \emph{Index ordering by query-independent measures, Ferguson, Smeaton} which is looking at documents on the web in particular, \emph{The Nearest Neighbour Problem In Information Retrieval, van Rijsbergen, Smeaton} and \emph{Filtered Document Retrieval with Frequency-Sorted Indexes, Persin, Zobel, Sacks-Davis}. 
+There are a number of techniques in which the document list traversal can be minimized while still maintaining high accuracy. This paper looks at three techniques: 
+\begin{enumerate}
+\item Index ordering by query-independent measures, Ferguson and Smeaton
+\item The Nearest Neighbour Problem In Information Retrieval, van Rijsbergenand Smeaton
+\item Filtered Document Retrieval with Frequency-Sorted Indexes, Persin, Zobel and Sacks-Davis
+\end{enumerate}
 
-I will examine document minimization further and discuss the main research questions and contributions of each paper in 2., talk about how these techniques are linked in 3., talk about two new proposals I have come up with in 4., and discuss my final findings in the Conclusion.
+I will examine document minimization further and discuss the main research questions and contributions of each paper in 2., talk about how these techniques are linked in 3., then propose two new ideas in 4. and discuss my final findings in the Conclusion.
 
 \section{Document Minimization}
 
-Briefly touch on the idea of optimizing this
+By minimizing the document collection that must be evaluated we can avoid unnecessary calculation which slows down performance, lengthens postings list and increases the inverted index file size.
+
+This area of research has been looked into since the early '80s and a multitude of techniques have arisen ranging from Query caching (Lempel and Moran (2003)) and two-tier architectures (Fagni, Perego, Silvestri, and Orlando (2006)) to nearest neighbour searching (Smeaton \& van Rijsbergen (1981)) which we talk about lately.
+
+These different techniques are not entirely mutually exclusive as some may think but in some cases can be built upon layer by layer such as the \emph{quit} and \emph{continue} strategies (Moffat \& Zobel, 1996) which are used in a variety of different techniques. 
+
+With todays web based document collection growing larger and larger the need to weed out documents which are spam or of poor quality to the user needs to be addressed. By removing documents which are of poor quality not only increases the performance of the search engine (as there are less documents to search through given a certain query) but also increases the likelihood that only relevant documents are returned to the user. Removing web documents from a document collection is discussed in the next section.
 
 \subsection{Research Questions}
-\subsubsection{Paper 1}
-Briefly talk about the research questions for this paper
+\subsubsection{Index ordering by query-independent measures}
+This paper from Ferguson et al. lists a range of heuristics for determining what html documents from the GOV2 test collection from TREC are spam or of poor quality. A common formula for finding good quality documents is PageRank which gives a high priority to documents it thinks is best. PageRank is used as a query-independent document filter but this paper hopes to do better and find better quality documents. Ferguson et al. come up with some heuristics which include:
+\begin{itemize}
+\item Linkage analysis
+\item Access counts
+\item Information-to-noise ratio
+\item Document cohesiveness
+\item Document structure and layout
+\item Click-through data
+\item Term-specific sorting
+\item Document length
+\end{itemize}
+\emph{See [1] for details about these heuristics.}
 
 \subsubsection{Paper 2}
 Briefly talk about the research questions for this paper
