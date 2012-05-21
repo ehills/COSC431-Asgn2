@@ -1,3 +1,9 @@
-\begin{thebibliography}{}
+\begin{thebibliography}{1}
+
+\bibitem{Smeaton:1981}
+A.~F. Smeaton and C.~J. van Rijsbergen.
+\newblock The nearest neighbour problem in information retrieval: an algorithm
+  using upperbounds.
+\newblock {\em SIGIR Forum}, 16(1):83--87, May 1981.
 
 \end{thebibliography}

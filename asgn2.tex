@@ -2,7 +2,7 @@
 
 \begin{document}
 
-\title{Minimizing Posting List Traversal\titlenote{A summary of previous papers and a suggestion of new ideas}}
+\title{Minimizing Posting List Cost\titlenote{A summary of previous papers and a suggestion of new ideas}}
 
 \numberofauthors{1} 
 \author{
@@ -77,7 +77,7 @@ The results of this paper found that by combining the best static measure (which
 
 \subsubsection{The Nearest Neighbour Problem in Information Retrieval}
 
-This paper from Smeaton et al. aims to reduce the number of documents that need to be scanned when scanning through the postings list for each term in the given query. It does this by using nearest neighbour classification and proposes a new algorithm for doing this.
+This paper from \cite{Smeaton:1981} Smeaton et al. aims to reduce the number of documents that need to be scanned when scanning through the postings list for each term in the given query. It does this by using nearest neighbour classification and proposes a new algorithm for doing this.
 
 The hopes of this paper was to develop an algorithm which would solve the nearest neighbour problem in IR. That is given a document it wishes to find all nearest neighbours of that up to a given threshold. This algorithm also has the added benefit of only checking the same document once, even if indexed multiple times by multiple terms in the search query.
 
@@ -109,9 +109,51 @@ This surprisingly fairly simple algorithm managed to save the number of document
 
 This paper by Persin et al. aimed to determine which documents are more likely to be highly ranked by organizing the inverted file by descending term frequency. By doing this the test data used 2\% of memory that a standard implementation would, cpu and disk use was also reduced. This paper also showed that frequency sorting can decrease the index size regardless of compression used.
 
+This paper discusses two points:
+\begin{enumerate}
+\item Limiting size of accumulators
+\item Sorting postings list by term frequency
+\end{enumerate}
+I will now describe the algorithm for limiting the number of documents in the accumulator:
 
+The query terms are first sorted by weight so that important terms are processed first. An insertion \emph{s$_{ins}$} and addition \emph{s$_{add}$} threshold are then calculated where \emph{s$_{add}$} <= \emph{s$_{ins}$}. As the postings list is processed for each term the partial similarity \emph{sim$_{q,d,t}$} of the term is compared to the thresholds. If \emph{sim$_{q,d,t}$} >= \emph{s$_{ins}$} then the document is likely to be important so \emph{sim$_{q,d,t}$} is added to the documents accumulator value (or one will be made). However if \emph{s$_{add}$} <= \emph{sim$_{q,d,t}$} < \emph{s$_{ins}$} then the document is probably not important but important enough to affect the outcome so \emph{sim$_{q,d,t}$} is added to the documents accumulator, or if no accumulator exists then nothing is done. And obviously if \emph{sim$_{q,d,t}$} < \emph{s$_{add}$} then it is not important and nothing is done. Where \emph{s$_{ins}$} = \emph{c$_{ins}$$^{.}$S$_{max}$} and \emph{S$_{add}$} = \emph{c$_{add}$$^{.}$S$_{max}$}.
+
+The above basically means that if there a large number of documents with high similarity then looking at ones with low similarity is a waste of time and by having the \emph{S$_{ins}$} threshold we can avoid looking at some documents all together. These allow us to save cpu usage (as we no longer need to need look at some documents) and memory usage (fewer documents in the accumulators).
+
+This algorithm does however require that suitable constants are chosen, too higher values means there will be a lower amount of documents returned and too low means more processing will be required and the benefit will be lost. 
+
+It then works out with a bit of rearranging and by substituting the definitions of the term weighting the \emph{s$_{ins}$} and \emph{s$_{add}$} can be calculated as frequencies \emph{f$_{ins}$} and \emph{f$_{add}$}.
+
+However no real improvement is available yet because we must still process each term in the query against the thresholds. This can be easily avoided by ordering the postings list by descending frequency and then checking the threshold and if it is below the threshold simply stop processing the postings list.
+
+The above then imposes a new problem however which is compression. Because the document ids are no longer in order the compression will be less effective, but this can be overcome by organizing the document ids grouped by frequency.
+
+This set up was then run on the Wall Street Journal database and vast improvements in all areas were found. Their experimen found they could reduce memory requirements from 173,000 to 4,000 accumulators; reduce the size of data requested from disk from 532 Kb to 157 Kb; and reduce cpu time from 3.18 to 1.20 seconds. These are all possible by the filtering algorithm described above and then by understanding that if we sort the list on term frequency then only the first part of each list will be examined saving in a lot of processing time.
 
 \subsection{Relationship}
+Talk about how all three papers are related to each other
+Talk about how all three papers are related to each other
+Talk about how all three papers are related to each other
+Talk about how all three papers are related to each other
+Talk about how all three papers are related to each other
+Talk about how all three papers are related to each other
+
+Talk about how all three papers are related to each other
+Talk about how all three papers are related to each other
+Talk about how all three papers are related to each other
+Talk about how all three papers are related to each other
+Talk about how all three papers are related to each other
+Talk about how all three papers are related to each other
+Talk about how all three papers are related to each other
+Talk about how all three papers are related to each other
+Talk about how all three papers are related to each other
+
+Talk about how all three papers are related to each other
+Talk about how all three papers are related to each other
+Talk about how all three papers are related to each other
+Talk about how all three papers are related to each other
+Talk about how all three papers are related to each other
+Talk about how all three papers are related to each other
 Talk about how all three papers are related to each other
 
 \section{Future Work}
@@ -120,16 +162,30 @@ I came up with two ideas in this field which are roughly to do with this... blah
 \subsection{Question 1}
 Well the first question i wanted answered is, can we do this... blah blah blah. the best way to do this would be combine this this and that and then it may be possible to imporve performance or not blah blah blah
 
+Well the first question i wanted answered is, can we do this... blah blah blah. the best way to do this would be combine this this and that and then it may be possible to imporve performance or not blah blah blah
+Well the first question i wanted answered is, can we do this... blah blah blah. the best way to do this would be combine this this and that and then it may be possible to imporve performance or not blah blah blah
+Well the first question i wanted answered is, can we do this... blah blah blah. the best way to do this would be combine this this and that and then it may be possible to imporve performance or not blah blah blah
+Well the first question i wanted answered is, can we do this... blah blah blah. the best way to do this would be combine this this and that and then it may be possible to imporve performance or not blah blah blah
+Well the first question i wanted answered is, can we do this... blah blah blah. the best way to do this would be combine this this and that and then it may be possible to imporve performance or not blah blah blah
+Well the first question i wanted answered is, can we do this... blah blah blah. the best way to do this would be combine this this and that and then it may be possible to imporve performance or not blah blah blah
 \subsection{Question 2}
+Well the first question i wanted answered is, can we do this... blah blah blah. the best way to do this would be combine this this and that and then it may be possible to imporve performance or not blah blah blah
+Well the first question i wanted answered is, can we do this... blah blah blah. the best way to do this would be combine this this and that and then it may be possible to imporve performance or not blah blah blah
+Well the first question i wanted answered is, can we do this... blah blah blah. the best way to do this would be combine this this and that and then it may be possible to imporve performance or not blah blah blah
+Well the first question i wanted answered is, can we do this... blah blah blah. the best way to do this would be combine this this and that and then it may be possible to imporve performance or not blah blah blah
 Well the first question i wanted answered is, can we do this... blah blah blah. the best way to do this would be combine this this and that and then it may be possible to imporve performance or not blah blah blah
 
 \section{Conclusions}
+You can see that this paper has described a multitude of different ways in which we can minimize the cost of transfering or merging the queries in a distributed IR environment. by taking points from paper 1 and paper 2 they can be combined and blah blah blah. Paper 3 talks aboue the architecture and we can see that this is important because of blah.
+You can see that this paper has described a multitude of different ways in which we can minimize the cost of transfering or merging the queries in a distributed IR environment. by taking points from paper 1 and paper 2 they can be combined and blah blah blah. Paper 3 talks aboue the architecture and we can see that this is important because of blah.
+You can see that this paper has described a multitude of different ways in which we can minimize the cost of transfering or merging the queries in a distributed IR environment. by taking points from paper 1 and paper 2 they can be combined and blah blah blah. Paper 3 talks aboue the architecture and we can see that this is important because of blah.
+You can see that this paper has described a multitude of different ways in which we can minimize the cost of transfering or merging the queries in a distributed IR environment. by taking points from paper 1 and paper 2 they can be combined and blah blah blah. Paper 3 talks aboue the architecture and we can see that this is important because of blah.
 You can see that this paper has described a multitude of different ways in which we can minimize the cost of transfering or merging the queries in a distributed IR environment. by taking points from paper 1 and paper 2 they can be combined and blah blah blah. Paper 3 talks aboue the architecture and we can see that this is important because of blah.
 
 I came up with my own 2 points and found that blah blah blah
 
 \bibliographystyle{abbrv}
-\bibliography{asgn2bib} 
+\bibliography{asgn2} 
 
 \subsection{References}
 Generated by bibtex from your ~.bib file.  Run latex,
