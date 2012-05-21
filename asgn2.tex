@@ -61,7 +61,7 @@ Some heuristics developed include:
 \item Term-specific sorting
 \item Global BM25 sorting
 \end{itemize}
-\emph{See Ferguson et al. for details about these heuristics.}
+\emph{See Ferguson et al. for details about all heuristics.}
 
 The two main new contributions of this paper are \emph{term-specific sorting} and \emph{global BM25 sorting}.
 
@@ -69,17 +69,47 @@ Term-specific sorting uses the term weighting approach of BM25 and applies that 
 
 Global BM25 sorting is similar to that above but keeps track of the importance of each term. This does cause problems however as it doesn't optimize for Zipf's Law  (Zipf, 1932) as it gives a higher rating for terms which are very infrequent rather than moderately infrequent. To get around this they imposed a threshold in which terms which do not appear in a document more times than the threshold will not be added. To calculate the threshold they used a large query log from the \emph{Excite} search engine from 1999. They generated two alternative global BM25 measures:
  
-\emph{global BM25 Query Log Terms (QLTs):} global BM25 scores by including only terms used in the query log.
+\emph{Global BM25 Query Log Terms (QLTs):} global BM25 scores by including only terms used in the query log.
 
 \emph{Global BM25 Query Log Term Frequency (QLTF):} considers the frequency that each term occurs within the query log (i.e. idf).
 
 The results of this paper found that by combining the best static measure (which turned out to be access counts) and the global BM25 sorting technique at retrieval-time (as well as normal BM25 at query-time) that they can achieve a higher P10 value than a conventional IR index by processing only 15\% of the postings list. This is a huge reduction of 85\%, however the \emph{Mean-average precision (MAP)} was lower than that of the conventional index (0.282 compared with 0.304). However the P10 and MAP trade-off is worth it as most uses are not likely to go past the first page of results so the lower MAP value is unlikely to have a real effect on the user.
 
-\subsubsection{Paper 2}
-Briefly talk about the research questions for this paper
+\subsubsection{The Nearest Neighbour Problem in Information Retrieval}
 
-\subsubsection{Paper 3}
-Briefly talk about the research questions for this paper
+This paper from Smeaton et al. aims to reduce the number of documents that need to be scanned when scanning through the postings list for each term in the given query. It does this by using nearest neighbour classification and proposes a new algorithm for doing this.
+
+The hopes of this paper was to develop an algorithm which would solve the nearest neighbour problem in IR. That is given a document it wishes to find all nearest neighbours of that up to a given threshold. This algorithm also has the added benefit of only checking the same document once, even if indexed multiple times by multiple terms in the search query.
+
+I describe the algorithm below:
+
+Maintain two sets, \emph{R} and \emph{S}. \emph{R} contains all documents which are final candidates for the set of nearest neighbours. Where the maximum size of \emph{R} is given by the user (lets assume one for now). \emph{S} contains the set of all documents discovered so far whether in \emph{R} or not.
+
+Then given a query containing a set of search terms, order the terms based on the order of their increasing frequencies of occurrence within the entire document collection. Then add every document containing the term into \emph{S}, the nearest neighbour will be found among this set.
+
+By assuming that the number of co-occurrences of index terms between a document and a query is zero, then the similarity is zero, then it is possible to remove documents which are not indexed by at least one search term from the nearest neighbour search.
+
+When checking each document found for a particular term, first check it is in \emph{S} and if it is not then calculate a similarity using one of the formula below and add it to \emph{S}.
+
+Similarity Measures:
+\begin{itemize}
+\item Simple
+\item Ivie
+\item Dice
+\item Cosine
+\item Jaccard
+\item Overlap
+\end{itemize}
+
+If the value returned is greater than the best value so far then this document becomes a candidate and is added to \emph{R}. After looking through each document for a given term it is then possible to calculate the maximum possible similarity value between among the documents which haven't been discovered yet. If this upper-bound that is calculated is less than the best value found so far then terminate.
+
+This surprisingly fairly simple algorithm managed to save the number of document comparisons needed by about 50-60\%. It is important the document collection does affect the results as explained in the paper, however an average amount of comparisons needed of about 40\% was accepted.
+
+\subsubsection{Filtered Document Retrieval with Frequency-Sorted Indexes}
+
+This paper by Persin et al. aimed to determine which documents are more likely to be highly ranked by organizing the inverted file by descending term frequency. By doing this the test data used 2\% of memory that a standard implementation would, cpu and disk use was also reduced. This paper also showed that frequency sorting can decrease the index size regardless of compression used.
+
+
 
 \subsection{Relationship}
 Talk about how all three papers are related to each other

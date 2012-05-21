@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2012.5.18)  20 MAY 2012 22:43
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2012.5.18)  21 MAY 2012 16:31
 entering extended mode
  %&-line parsing enabled.
 **asgn2.tex
@@ -208,20 +208,22 @@ File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 ) [1
 
 
-] (./asgn2.bbl)
-LaTeX Font Info:    Try loading font information for T1+aett on input line 109.
+] [2] (./asgn2.bbl)
+LaTeX Font Info:    Try loading font information for T1+aett on input line 139.
 
 
 (/usr/share/texmf-texlive/tex/latex/ae/t1aett.fd
 File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
-) [2] (./asgn2.aux) ) 
+) [3
+
+] (./asgn2.aux) ) 
 Here is how much of TeX's memory you used:
  1826 strings out of 495062
  20011 string characters out of 1182644
- 75973 words of memory out of 3000000
+ 76973 words of memory out of 3000000
  4993 multiletter control sequences out of 15000+50000
  38626 words of font info for 51 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
  39i,10n,26p,687b,248s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on asgn2.dvi (2 pages, 12380 bytes).
+Output written on asgn2.dvi (3 pages, 16540 bytes).
