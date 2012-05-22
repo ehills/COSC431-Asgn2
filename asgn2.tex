@@ -128,20 +128,34 @@ However no real improvement is available yet because we must still process each 
 
 The above then imposes a new problem however which is compression. Because the document ids are no longer in order the compression will be less effective, but this can be overcome by organizing the document ids grouped by frequency.
 
-This set up was then run on the Wall Street Journal database and vast improvements in all areas were found. Their experimen found they could reduce memory requirements from 173,000 to 4,000 accumulators; reduce the size of data requested from disk from 532 Kb to 157 Kb; and reduce cpu time from 3.18 to 1.20 seconds. These are all possible by the filtering algorithm described above and then by understanding that if we sort the list on term frequency then only the first part of each list will be examined saving in a lot of processing time.
+This set up was then run on the Wall Street Journal database and vast improvements in all areas were found. Their experiment found they could reduce memory requirements from 173,000 to 4,000 accumulators; reduce the size of data requested from disk from 532 Kb to 157 Kb; and reduce cpu time from 3.18 to 1.20 seconds. These are all possible by the filtering algorithm described above and then by understanding that if we sort the list on term frequency then only the first part of each list will be examined saving in a lot of processing time.
 
 \subsection{Relationship}
 
-The above 
+The relationship between the three papers described above is fairly obvious. The `main' aim of these papers is to minimize the number of documents that need to be examined to fulfill a query. 
+
+The first paper does this by running query-independent heuristics and limiting the number of documents put in the postings list to begin with, filtering out documents likely to be of poor quality and then sorting them on a global BM25 ranking.
+
+The second does this by looking at the nearest neighbour problem in which it gets a threshold value and then stops processing the postings list if the next document is not greater than the value.
+
+The third then limits the number of documents put into the accumulator and then sorts the postings list by frequency so that only the top part of the postings list needs to be examined and hence saves on a large amount of resources.
+
+The relationship here is extremely strong and the papers ideas are built off one another.
+
+Below I describe two new ideas for possibly limiting the number of documents needing to be processed.
 
 \section{Future Work}
-I came up with two ideas in this field which are roughly to do with this... blah blah blah
+I have come up with two new possible solutions for minimizing the number of postings needing to be examined. 
+
+The first question I pose is similar to Ferguson et al. in which I propose a new heuristic for removing or minimizing the ranking of web documents that have a high out-going-link-to-ratio. 
+
+The second question I pose is similar to Ferguson et al. in which I propose a new heuristic for removing or minimizing the ranking of web documents that have a high out-going-link-to-ratio. 
 
 \subsection{Question 1}
 
 As has been discussed previously, removing documents as early as possible which are not likely to affect our search results but can speed up our search is ideal. This is why I propose that when looking at documents from the web and deciding whether they should be added or not (such as by using the heuristics discussed in Ferguson et al., lowering the rank of pages that have a high content-to-outgoing-link ratio could be beneficial.
 
-The use case you could imagine is a page which contains a list of links to download a particular program. Due to some ranking functions such as PageRank these pages may get a higher ranking due to the number of out-going links in the document. I propose that having these documents ranked higher can affect what the user wants.
+The use case you could imagine is a page which contains a list of links to download a particular program. Due to some ranking functions these pages may get a higher ranking due to the number of out-going links in the document. I propose that having these documents ranked higher can affect what the user wants.
 
 If you have a query such as "Galaxy SII Ice-Cream-Sandwhich" You are probably looking for information about the new Android operating system, rather than a list of links of where to download or buy the product. I propose that there is a tipping point in which if the number of out-going links is higher by some threshold than the ranking value of the content itself, that the overall rank of this document should be lowered. There is of course many exceptions to this where a user may explicitly want this such as terms like 'buy' or 'download' etc.
 
@@ -152,11 +166,17 @@ If you have a query such as "Galaxy SII Ice-Cream-Sandwhich" You are probably lo
 By doing this you would be more likely to be returned documents containing more content than links on a particular page.
 
 \subsection{Question 2}
-Well the first question i wanted answered is, can we do this... blah blah blah. the best way to do this would be combine this this and that and then it may be possible to imporve performance or not blah blah blah
-Well the first question i wanted answered is, can we do this... blah blah blah. the best way to do this would be combine this this and that and then it may be possible to imporve performance or not blah blah blah
-Well the first question i wanted answered is, can we do this... blah blah blah. the best way to do this would be combine this this and that and then it may be possible to imporve performance or not blah blah blah
-Well the first question i wanted answered is, can we do this... blah blah blah. the best way to do this would be combine this this and that and then it may be possible to imporve performance or not blah blah blah
-Well the first question i wanted answered is, can we do this... blah blah blah. the best way to do this would be combine this this and that and then it may be possible to imporve performance or not blah blah blah
+As has been discussed previously, removing documents as early as possible which are not likely to affect our search results but can speed up our search is ideal. This is why I propose that when looking at documents from the web and deciding whether they should be added or not (such as by using the heuristics discussed in Ferguson et al., lowering the rank of pages that have a high content-to-outgoing-link ratio could be beneficial.
+
+The use case you could imagine is a page which contains a list of links to download a particular program. Due to some ranking functions these pages may get a higher ranking due to the number of out-going links in the document. I propose that having these documents ranked higher can affect what the user wants.
+
+If you have a query such as "Galaxy SII Ice-Cream-Sandwhich" You are probably looking for information about the new Android operating system, rather than a list of links of where to download or buy the product. I propose that there is a tipping point in which if the number of out-going links is higher by some threshold than the ranking value of the content itself, that the overall rank of this document should be lowered. There is of course many exceptions to this where a user may explicitly want this such as terms like 'buy' or 'download' etc.
+
+** SHOULD PROB FIND PAPER TO BACK UP ABOVE **
+
+** I COULD GET A QUERY TRACE FROM GOOGLE AND FIGURE OUT WHICH WORDS MEAN YOU WANT LINKS **
+
+By doing this you would be more likely to be returned documents containing more content than links on a particular page.
 
 \section{Conclusions}
 You can see that this paper has described a multitude of different ways in which we can minimize the cost of transfering or merging the queries in a distributed IR environment. by taking points from paper 1 and paper 2 they can be combined and blah blah blah. Paper 3 talks aboue the architecture and we can see that this is important because of blah.
@@ -170,12 +190,4 @@ I came up with my own 2 points and found that blah blah blah
 \bibliographystyle{abbrv}
 \bibliography{asgn2} 
 
-\subsection{References}
-Generated by bibtex from your ~.bib file.  Run latex,
-then bibtex, then latex twice (to resolve references)
-to create the ~.bbl file.  Insert that ~.bbl file into
-the .tex source file and comment out
-the command \texttt{{\char'134}thebibliography}.
-\balancecolumns
-% That's all folks!
 \end{document}
