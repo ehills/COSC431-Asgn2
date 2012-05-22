@@ -29,9 +29,9 @@ By reducing the amount of documents searched by a particular query you do run th
 
 There are a number of techniques in which the document list traversal can be minimized while still maintaining high accuracy. This paper looks at three techniques: 
 \begin{enumerate}
-\item Index ordering by query-independent measures, Ferguson and Smeaton
-\item The Nearest Neighbour Problem In Information Retrieval, van Rijsbergenand Smeaton
-\item Filtered Document Retrieval with Frequency-Sorted Indexes, Persin, Zobel and Sacks-Davis
+\item Index ordering by query-independent measures, Ferguson and Smeaton \cite{Ferguson:2012}
+\item The Nearest Neighbour Problem In Information Retrieval, van Rijsbergeni and Smeaton \cite{Smeaton:1981}
+\item Filtered Document Retrieval with Frequency-Sorted Indexes, Persin, Zobel and Sacks-Davis \cite{Persin:1996}
 \end{enumerate}
 
 I will examine document minimization further and discuss the main research questions and contributions of each paper in 2., talk about how these techniques are linked in 3., then propose two new ideas in 4. and discuss my final findings in the Conclusion.
@@ -40,9 +40,9 @@ I will examine document minimization further and discuss the main research quest
 
 By minimizing the document collection that must be evaluated we can avoid unnecessary calculation which slows down performance, lengthens postings list and increases the inverted index file size.
 
-This area of research has been looked into since the early '80s and a multitude of techniques have arisen ranging from Query caching (Lempel and Moran (2003)) and two-tier architectures (Fagni, Perego, Silvestri, and Orlando (2006)) to nearest neighbour searching (Smeaton \& van Rijsbergen (1981)) which we talk about lately.
+This area of research has been looked into since the early '80s and a multitude of techniques have arisen ranging from Query caching \cite{Lempel:2003} and two-tier architectures \cite{Fagni:2006} to nearest neighbour searching \cite{Smeaton:1981} which we talk about later.
 
-These different techniques are not entirely mutually exclusive as some may think but in some cases can be built upon layer by layer such as the \emph{quit} and \emph{continue} strategies (Moffat \& Zobel, 1996) which are used in a variety of different techniques. 
+These different techniques are not entirely mutually exclusive as some may think but in some cases can be built upon layer by layer such as the \emph{quit} and \emph{continue} strategies \cite{Moffat:1996} which are used in a variety of different techniques. 
 
 With todays web based document collection growing larger and larger the need to weed out documents which are spam or of poor quality to the user needs to be addressed. By removing documents which are of poor quality not only increases the performance of the search engine (as there are less documents to search through given a certain query) but also increases the likelihood that only relevant documents are returned to the user. Removing web documents from a document collection is discussed in the next section.
 
@@ -61,13 +61,13 @@ Some heuristics developed include:
 \item Term-specific sorting
 \item Global BM25 sorting
 \end{itemize}
-\emph{See Ferguson et al. for details about all heuristics.}
+\emph{See Ferguson et al. \cite{Ferguson:2012} for details about all heuristics.}
 
 The two main new contributions of this paper are \emph{term-specific sorting} and \emph{global BM25 sorting}.
 
 Term-specific sorting uses the term weighting approach of BM25 and applies that to each document in each postings list separately and provides a pre-calculated BM25 score for each posting list. This is relatively close to what would be used at query-time however is lacking the summation of each query term score. It is also important to note that there is no need to maintain information such as \emph{df(t)}.
 
-Global BM25 sorting is similar to that above but keeps track of the importance of each term. This does cause problems however as it doesn't optimize for Zipf's Law  (Zipf, 1932) as it gives a higher rating for terms which are very infrequent rather than moderately infrequent. To get around this they imposed a threshold in which terms which do not appear in a document more times than the threshold will not be added. To calculate the threshold they used a large query log from the \emph{Excite} search engine from 1999. They generated two alternative global BM25 measures:
+Global BM25 sorting is similar to that above but keeps track of the importance of each term. This does cause problems however as it doesn't optimize for Zipf's Law as it gives a higher rating for terms which are very infrequent rather than moderately infrequent. To get around this they imposed a threshold in which terms which do not appear in a document more times than the threshold will not be added. To calculate the threshold they used a large query log from the \emph{Excite} search engine from 1999. They generated two alternative global BM25 measures:
  
 \emph{Global BM25 Query Log Terms (QLTs):} global BM25 scores by including only terms used in the query log.
 
@@ -77,7 +77,7 @@ The results of this paper found that by combining the best static measure (which
 
 \subsubsection{The Nearest Neighbour Problem in Information Retrieval}
 
-This paper from \cite{Smeaton:1981} Smeaton et al. aims to reduce the number of documents that need to be scanned when scanning through the postings list for each term in the given query. It does this by using nearest neighbour classification and proposes a new algorithm for doing this.
+This paper from Smeaton et al. \cite{Smeaton:1981} aims to reduce the number of documents that need to be scanned when scanning through the postings list for each term in the given query. It does this by using nearest neighbour classification and proposes a new algorithm for doing this.
 
 The hopes of this paper was to develop an algorithm which would solve the nearest neighbour problem in IR. That is given a document it wishes to find all nearest neighbours of that up to a given threshold. This algorithm also has the added benefit of only checking the same document once, even if indexed multiple times by multiple terms in the search query.
 
@@ -107,7 +107,7 @@ This surprisingly fairly simple algorithm managed to save the number of document
 
 \subsubsection{Filtered Document Retrieval with Frequency-Sorted Indexes}
 
-This paper by Persin et al. aimed to determine which documents are more likely to be highly ranked by organizing the inverted file by descending term frequency. By doing this the test data used 2\% of memory that a standard implementation would, cpu and disk use was also reduced. This paper also showed that frequency sorting can decrease the index size regardless of compression used.
+Persin et al. \cite{Persin:1996} aimed to determine which documents are more likely to be highly ranked by organizing the inverted file by descending term frequency. By doing this the test data used 2\% of memory that a standard implementation would, cpu and disk use was also reduced. This paper also showed that frequency sorting can decrease the index size regardless of compression used.
 
 This paper discusses two points:
 \begin{enumerate}
