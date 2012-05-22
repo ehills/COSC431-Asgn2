@@ -131,41 +131,23 @@ The above then imposes a new problem however which is compression. Because the d
 This set up was then run on the Wall Street Journal database and vast improvements in all areas were found. Their experimen found they could reduce memory requirements from 173,000 to 4,000 accumulators; reduce the size of data requested from disk from 532 Kb to 157 Kb; and reduce cpu time from 3.18 to 1.20 seconds. These are all possible by the filtering algorithm described above and then by understanding that if we sort the list on term frequency then only the first part of each list will be examined saving in a lot of processing time.
 
 \subsection{Relationship}
-Talk about how all three papers are related to each other
-Talk about how all three papers are related to each other
-Talk about how all three papers are related to each other
-Talk about how all three papers are related to each other
-Talk about how all three papers are related to each other
-Talk about how all three papers are related to each other
 
-Talk about how all three papers are related to each other
-Talk about how all three papers are related to each other
-Talk about how all three papers are related to each other
-Talk about how all three papers are related to each other
-Talk about how all three papers are related to each other
-Talk about how all three papers are related to each other
-Talk about how all three papers are related to each other
-Talk about how all three papers are related to each other
-Talk about how all three papers are related to each other
-
-Talk about how all three papers are related to each other
-Talk about how all three papers are related to each other
-Talk about how all three papers are related to each other
-Talk about how all three papers are related to each other
-Talk about how all three papers are related to each other
-Talk about how all three papers are related to each other
-Talk about how all three papers are related to each other
+The above 
 
 \section{Future Work}
 I came up with two ideas in this field which are roughly to do with this... blah blah blah
 
 \subsection{Question 1}
 
-As has been discussed previously, removing documents as early as possible which are not likely to affect our search results but can speed up our search is ideal. This is why I propose that when looking at documents from the web and deciding whether they should be added or not (such as by using the heuristics discussed in Ferguson et al., removing pages that have a high content-to-outgoing-link ratio could be beneficial.
+As has been discussed previously, removing documents as early as possible which are not likely to affect our search results but can speed up our search is ideal. This is why I propose that when looking at documents from the web and deciding whether they should be added or not (such as by using the heuristics discussed in Ferguson et al., lowering the rank of pages that have a high content-to-outgoing-link ratio could be beneficial.
 
-The use case you could imagine is a page which contains a list of links to download a particular program. Due to ranking functions such as PageRank this pages get a higher ranking due to the number of links in the document. I propose that having these documents arbitrarily ranks these higher than the user may wish.
+The use case you could imagine is a page which contains a list of links to download a particular program. Due to some ranking functions such as PageRank these pages may get a higher ranking due to the number of out-going links in the document. I propose that having these documents ranked higher can affect what the user wants.
 
-If you have a query such as "Galaxy SII Ice-Cream-Sandwhich" You are probably looking for information about the query rather than a list of links of where to download or buy the product. I propose that there is a tipping point in where the ranking of value for links should not be higher by some threshold than the ranking value of the content itself.
+If you have a query such as "Galaxy SII Ice-Cream-Sandwhich" You are probably looking for information about the new Android operating system, rather than a list of links of where to download or buy the product. I propose that there is a tipping point in which if the number of out-going links is higher by some threshold than the ranking value of the content itself, that the overall rank of this document should be lowered. There is of course many exceptions to this where a user may explicitly want this such as terms like 'buy' or 'download' etc.
+
+** SHOULD PROB FIND PAPER TO BACK UP ABOVE **
+
+** I COULD GET A QUERY TRACE FROM GOOGLE AND FIGURE OUT WHICH WORDS MEAN YOU WANT LINKS **
 
 By doing this you would be more likely to be returned documents containing more content than links on a particular page.
 
