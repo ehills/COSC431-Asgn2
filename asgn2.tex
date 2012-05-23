@@ -159,13 +159,9 @@ The use case you could imagine is a page which contains a list of links to downl
 
 If you have a query such as "Galaxy SII Ice-Cream-Sandwhich" You are probably looking for information about the new Android operating system, rather than a list of links of where to download or buy the product. I propose that there is a tipping point in which if the number of out-going links is higher by some threshold than the ranking value of the content itself, that the overall rank of this document should be lowered. There is of course many exceptions to this where a user may explicitly want this such as terms like 'buy' or 'download' etc.
 
-** SHOULD PROB FIND PAPER TO BACK UP ABOVE **
-
 To avoid the last point discussed above in which a user does want these links (based on select query terms), it is possible to look at query traces (say from Google) in which we can analyse which terms in a particular query had the users go to the page containing the high link-to-content ratio.
 
-Once recognising to a certain degree, which terms the users used, we can then find where the exceptions occur and otherwise calculate a value which represents the link-to-content ratio, we will call this \emph{link-noise}.
-
-** I COULD GET A QUERY TRACE FROM GOOGLE AND FIGURE OUT WHICH WORDS MEAN YOU WANT LINKS **
+Once recognising to a certain degree, which terms the users used, we can then find where the exceptions occur and otherwise calculate a value which represents the link-to-content ratio.
 
 By doing this you would be more likely to be returned documents containing more content than links on a particular page.
 
@@ -183,13 +179,10 @@ If you have a query such as "Galaxy SII Ice-Cream-Sandwhich" You are probably lo
 By doing this you would be more likely to be returned documents containing more content than links on a particular page.
 
 \section{Conclusions}
-You can see that this paper has described a multitude of different ways in which we can minimize the cost of transfering or merging the queries in a distributed IR environment. by taking points from paper 1 and paper 2 they can be combined and blah blah blah. Paper 3 talks aboue the architecture and we can see that this is important because of blah.
-You can see that this paper has described a multitude of different ways in which we can minimize the cost of transfering or merging the queries in a distributed IR environment. by taking points from paper 1 and paper 2 they can be combined and blah blah blah. Paper 3 talks aboue the architecture and we can see that this is important because of blah.
-You can see that this paper has described a multitude of different ways in which we can minimize the cost of transfering or merging the queries in a distributed IR environment. by taking points from paper 1 and paper 2 they can be combined and blah blah blah. Paper 3 talks aboue the architecture and we can see that this is important because of blah.
-You can see that this paper has described a multitude of different ways in which we can minimize the cost of transfering or merging the queries in a distributed IR environment. by taking points from paper 1 and paper 2 they can be combined and blah blah blah. Paper 3 talks aboue the architecture and we can see that this is important because of blah.
-You can see that this paper has described a multitude of different ways in which we can minimize the cost of transfering or merging the queries in a distributed IR environment. by taking points from paper 1 and paper 2 they can be combined and blah blah blah. Paper 3 talks aboue the architecture and we can see that this is important because of blah.
+In this paper I have shown three ways in which it is possible to reduce the number of documents that needs to be examined when answering a particular query. By minimizing the number of documents to process at query-time we save on memory, cpu and even disk usage. These combined can drastically improve performance and in some cases the quality of the documents returned. 
 
-I came up with my own 2 points and found that blah blah blah
+Ferguson et al. took a query-independent approach to web documents by using a range of heuristics and Global BM25 sorting. Smeaton et al considered the problem of finding the nearest neighbour
+
 
 \bibliographystyle{abbrv}
 \bibliography{asgn2} 
