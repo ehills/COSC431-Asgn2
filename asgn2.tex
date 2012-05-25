@@ -147,9 +147,9 @@ Below I describe two new ideas for possibly limiting the number of documents nee
 \section{Future Work}
 I have come up with two new possible solutions for minimizing the number of postings needing to be examined. 
 
-The first question I pose is similar to Ferguson et al. in which I propose a new heuristic for removing or minimizing the ranking of web documents that have a high out-going-link-to-ratio. 
+The first question I will pose is similar to Ferguson et al. in which I propose a new heuristic for removing or minimizing the ranking of web documents that have a high out-going-link-to-content ratio. 
 
-The second question I pose is similar to Ferguson et al. in which I propose a new heuristic for removing or minimizing the ranking of web documents that have a high out-going-link-to-ratio. 
+The second question that I will propose is another web document heuristic in which I believe it would be beneficial if we were able to filter documents which have been created for the sole purpose of boosting search-engine-optimization. By removing these documents we limit the number of poor quality documents and also punish those for using techniques that are usually discouraged. 
 
 \subsection{Question 1}
 
@@ -166,22 +166,21 @@ Once recognising to a certain degree, which terms the users used, we can then fi
 By doing this you would be more likely to be returned documents containing more content than links on a particular page.
 
 \subsection{Question 2}
-As has been discussed previously, removing documents as early as possible which are not likely to affect our search results but can speed up our search is ideal. This is why I propose that when looking at documents from the web and deciding whether they should be added or not (such as by using the heuristics discussed in Ferguson et al., lowering the rank of pages that have a high content-to-outgoing-link ratio could be beneficial.
 
-The use case you could imagine is a page which contains a list of links to download a particular program. Due to some ranking functions these pages may get a higher ranking due to the number of out-going links in the document. I propose that having these documents ranked higher can affect what the user wants.
+Following on from the approach above my next approach is to look at a mixture of the term-frequency and the proximity of the term. My idea is this, if a term is found multiple times (above some threshold) and is found within some small number of words away, and this formula happens multiple times in itself, then there is the possibility that this page has been specifically designed for search-engine-optimisation (SEO). There is also the likely possibility that they do not repeat the same word over and over but instead use synonyms, this means that the system would have to look up a thesaurus to check (adding overhead). If the system detects this pattern has occurred more times than some threshold then the page should be detected as solely used for SEO and discarded.
 
-If you have a query such as "Galaxy SII Ice Cream Sandwhich" You are probably looking for information about the new Android operating system, rather than a list of links of where to download or buy the product. I propose that there is a tipping point in which if the number of out-going links is higher by some threshold than the ranking value of the content itself, that the overall rank of this document should be lowered. There is of course many exceptions to this where a user may explicitly want this such as terms like 'buy' or 'download' etc.
+Of course this approach can run into multiple problems, most search engines use these pages to detect good pages from the bad, \emph{i.e.} if it contains the word (or similar word) multiple times and within close proximity its probably on the subject and deemed to be important. This is why the system must be able to detect if the number of times this pattern appears is more frequent than other actual content.
 
-By doing this you would be more likely to be returned documents containing more content than links on a particular page.
+This approach definitely has some areas of concerns such as the added overhead of consulting a thesaurus and the possibility of discarding useful (if not possibly some of the top) documents. However I feel that with some investigation, useful threshold values may be found and then this would be a good technique for limiting the number of pages solely used to boost search-engine ranking.
 
 \section{Conclusions}
 In this paper I have shown three ways in which it is possible to reduce the number of documents that needs to be examined when answering a particular query. By minimizing the number of documents to process at query-time we save on memory, cpu and even disk usage. These combined can drastically improve performance and in some cases the quality of the documents returned. 
 
 Ferguson et al. took a query-independent approach to web documents by using a range of heuristics and Global BM25 sorting. Smeaton et al considered the problem of finding the nearest neighbour and limiting the number of documents it has to look at in the postings list. Finally Persin et al. took two approaches, the first being to minimize the number of accumulators by using some threshold values, and the second is to sort the postings list by term frequency and only taking the top part of the list thus reducing the number of postings traversed. 
 
-I then proposed two new ways of limiting the number of documents needing examined, the first approach I propose is to look at link-to-content ratio and lower the ranking, or remove altogether, the documents in which (by some appropriate) there are more links than content. The second method I proposed is to ...........
+I then proposed two new ways of limiting the number of documents needing examined, the first approach I propose is to look at link-to-content ratio and lower the ranking, or remove altogether, the documents in which (by some appropriate) there are more links than content. The second method I proposed is another heuristic for web documents in which it may be possible to remove documents that are solely used for search-engine-optimization. Removing documents would not only help remove the number of documents found but also punish those that are using SEO ranking techniques that are usually discouraged.
 
-So as you can see by removing the number of documents that we need to examine at query-time increases performance and in some cases effectiveness.
+So as you can see by removing the number of documents that we need to examine at query-time increases performance and in some cases the quality of documents returned. I believe this to be an important field as the number of documents continues to grow and with it the number of poorer quality documents and time it takes to process them.
 
 \bibliographystyle{abbrv}
 \bibliography{asgn2} 
