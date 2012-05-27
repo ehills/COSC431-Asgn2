@@ -151,7 +151,7 @@ The first question I will pose is similar to Ferguson et al. in which I propose 
 
 The second question that I will propose is another web document heuristic in which I believe it would be beneficial if we were able to filter documents which have been created for the sole purpose of boosting search-engine-optimization. By removing these documents we limit the number of poor quality documents and also punish those for using techniques that are usually discouraged. 
 
-\subsection{Question 1}
+\subsection{Proposal One}
 
 As has been discussed previously, removing documents as early as possible which are not likely to affect our search results but can speed up our search is ideal. This is why I propose that when looking at documents from the web and deciding whether they should be added or not (such as by using the heuristics discussed in Ferguson et al., lowering the rank of pages that have a high content-to-outgoing-link ratio could be beneficial.
 
@@ -165,7 +165,7 @@ Once recognising to a certain degree, which terms the users used, we can then fi
 
 By doing this you would be more likely to be returned documents containing more content than links on a particular page.
 
-\subsection{Question 2}
+\subsection{Proposal 2}
 
 Following on from the approach above my next approach is to look at a mixture of the term-frequency and the proximity of the term. My idea is this, if a term is found multiple times (above some threshold) and is found within some small number of words away, and this formula happens multiple times in itself, then there is the possibility that this page has been specifically designed for search-engine-optimisation (SEO). There is also the likely possibility that they do not repeat the same word over and over but instead use synonyms, this means that the system would have to look up a thesaurus to check (adding overhead). If the system detects this pattern has occurred more times than some threshold then the page should be detected as solely used for SEO and discarded.
 
