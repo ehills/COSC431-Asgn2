@@ -23,9 +23,9 @@ This task usually requires searching through the entire document collection to f
 
 \section{Introduction}
 
-Searching through document collections which are large can mean when it comes to query time that all documents that are indexed by one or more of the search terms will be examined. When you have a large document collection such as the TREC terabyte collection, searching every document that is indexed by even a relatively rare term can mean searching through thousands or even millions of documents.
+Searching through document collections which are large can mean that when it comes to query time, all documents that are indexed by one or more of the search terms will be examined. When you have a large document collection such as the TREC terabyte collection, searching every document that is indexed by even a relatively rare term can mean searching through thousands or even millions of documents.
 
-By reducing the amount of documents searched by a particular query you do run the risk of limiting the amount of documents returned which are relevant to the user. Keeping the accuracy of your list returned is a top priority when searching through a minimal amount of documents. 
+By reducing the amount of documents searched by a particular query you can run the risk of limiting the amount of documents returned which are relevant to the user. Keeping the accuracy of your list returned is a top priority when searching through a minimal amount of documents. 
 
 There are a number of techniques in which the document list traversal can be minimized while still maintaining high accuracy. This paper looks at three techniques: 
 \begin{enumerate}
@@ -34,23 +34,23 @@ There are a number of techniques in which the document list traversal can be min
 \item Filtered Document Retrieval with Frequency-Sorted Indexes, Persin, Zobel and Sacks-Davis \cite{Persin:1996}
 \end{enumerate}
 
-I will examine document minimization further and discuss the main research questions and contributions of each paper in 2., talk about how these techniques are linked in 3., then propose two new ideas in 4. and discuss my final findings in the Conclusion.
+I will examine document minimization further and discuss the main research questions and contributions of each paper in 2., talk about how these techniques are linked in 3., then propose two new ideas of my own in 4. and finally provide a brief overview in the conclusion.
 
 \section{Document Minimization}
 
 By minimizing the document collection that must be evaluated we can avoid unnecessary calculation which slows down performance, lengthens postings list and increases the inverted index file size.
 
-This area of research has been looked into since the early '80s and a multitude of techniques have arisen ranging from Query caching \cite{Lempel:2003} and two-tier architectures \cite{Fagni:2006} to nearest neighbour searching \cite{Smeaton:1981} which we talk about later.
+This area of research has been looked into since the early '80s and a multitude of techniques have arisen ranging from Query caching \cite{Lempel:2003} and two-tier architectures \cite{Fagni:2006} to nearest neighbour searching \cite{Smeaton:1981} which I will talk about later.
 
-These different techniques are not entirely mutually exclusive as some may think but in some cases can be built upon layer by layer such as the \emph{quit} and \emph{continue} strategies \cite{Moffat:1996} which are used in a variety of different techniques. 
+These different techniques are not entirely mutually exclusive as some may think, in fact in some cases can be built upon layer by layer such as the \emph{quit} and \emph{continue} strategies \cite{Moffat:1996} which are used in a variety of different techniques. 
 
-With todays web based document collection growing larger and larger the need to weed out documents which are spam or of poor quality to the user needs to be addressed. By removing documents which are of poor quality not only increases the performance of the search engine (as there are less documents to search through given a certain query) but also increases the likelihood that only relevant documents are returned to the user. Removing web documents from a document collection is discussed in the next section.
+With todays web based document collection growing larger and larger, the need to weed out documents which are spam or of poor quality to the user needs to be addressed. By removing documents which are of poor quality not only increases the performance of the search engine (as there are less documents to search through given a certain query) but also increases the likelihood that only relevant documents are returned to the user. Removing web documents from a document collection is discussed in the next section.
 
 \subsection{Research Questions \& Contributions}
 \subsubsection{Index ordering by query-independent measures}
-This paper from Ferguson et al. aims to remove html documents from its index in a query-independent manner. This means that instead of at query-time and having to wade through all documents for each query and decide at query-time that you do not want that document, you instead check to see if you want that document in the first place. 
+This paper from Ferguson \emph{et al.} aims to remove html documents from its index in a query-independent manner. This means that instead of at query-time having to wade through all documents for each query and decide at query-time that you do not want that document, you instead check to see if you want that document in the document collection in the first place. 
 
-Ferguson et al. have come up with a range of heuristics for determining which documents are likely to be spam or of poor quality. A common formula for finding good quality documents is PageRank which gives a high priority to documents it thinks is best. PageRank is used as a query-independent document filter but this paper hopes to do better in the quality of documents returned.
+Ferguson \emph{et al.} have come up with a range of heuristics for determining which documents are likely to be spam or of poor quality. A common formula for finding good quality documents is PageRank which gives a high priority to documents it thinks is best. PageRank is used as a query-independent document filter but this paper hopes to do better in the quality of documents returned.
 
 Some heuristics developed include:
 \begin{itemize}
@@ -61,33 +61,33 @@ Some heuristics developed include:
 \item Term-specific sorting
 \item Global BM25 sorting
 \end{itemize}
-\emph{See Ferguson et al. \cite{Ferguson:2012} for details about all heuristics.}
+\emph{See Ferguson \emph{et al.} \cite{Ferguson:2012} for details about all heuristics.}
 
 The two main new contributions of this paper are \emph{term-specific sorting} and \emph{global BM25 sorting}.
 
-Term-specific sorting uses the term weighting approach of BM25 and applies that to each document in each postings list separately and provides a pre-calculated BM25 score for each posting list. This is relatively close to what would be used at query-time however is lacking the summation of each query term score. It is also important to note that there is no need to maintain information such as \emph{df(t)}.
+Term-specific sorting uses the term weighting approach of BM25 and applies that to each document in each postings list separately and provides a pre-calculated BM25 score for each posting list. This is relatively close to what would be done at query-time, however it is lacking the summation of each query term score. It is also important to note that there is no need to maintain information such as \emph{df(t)}.
 
 Global BM25 sorting is similar to that above but keeps track of the importance of each term. This does cause problems however as it doesn't optimize for Zipf's Law as it gives a higher rating for terms which are very infrequent rather than moderately infrequent. To get around this they imposed a threshold in which terms which do not appear in a document more times than the threshold will not be added. To calculate the threshold they used a large query log from the \emph{Excite} search engine from 1999. They generated two alternative global BM25 measures:
  
 \emph{Global BM25 Query Log Terms (QLTs):} global BM25 scores by including only terms used in the query log.
 
-\emph{Global BM25 Query Log Term Frequency (QLTF):} considers the frequency that each term occurs within the query log (i.e. idf).
+\emph{Global BM25 Query Log Term Frequency (QLTF):} considers the frequency that each term occurs within the query log (\emph{i.e.} idf).
 
-The results of this paper found that by combining the best static measure (which turned out to be access counts) and the global BM25 sorting technique at retrieval-time (as well as normal BM25 at query-time) that they can achieve a higher P10 value than a conventional IR index by processing only 15\% of the postings list. This is a huge reduction of 85\%, however the \emph{Mean-average precision (MAP)} was lower than that of the conventional index (0.282 compared with 0.304). However the P10 and MAP trade-off is worth it as most uses are not likely to go past the first page of results so the lower MAP value is unlikely to have a real effect on the user.
+The results of this paper found that by combining the best static measure (which turned out to be access counts) and the global BM25 sorting technique at retrieval-time (as well as normal BM25 at query-time) that they can achieve a higher P10 value than a conventional IR index by processing only 15\% of the postings list. This is a huge reduction of 85\%, however the \emph{Mean-average precision (MAP)} was lower than that of the conventional index (0.282 compared with 0.304). Ferguson \emph{et al.} decided that the P10 vs. MAP trade-off was worth it as most uses are not likely to go past the first page of results anyway so the lower MAP value is unlikely to have a real effect on the user.
 
 \subsubsection{The Nearest Neighbour Problem in Information Retrieval}
 
-This paper from Smeaton et al. \cite{Smeaton:1981} aims to reduce the number of documents that need to be scanned when scanning through the postings list for each term in the given query. It does this by using nearest neighbour classification and proposes a new algorithm for doing this.
+This paper from Smeaton \emph{et al.} \cite{Smeaton:1981} aims to reduce the number of documents that need to be scanned when scanning through the postings list for each term in the given query. It does this by using nearest neighbour classification and proposes a new algorithm for doing this.
 
-The hopes of this paper was to develop an algorithm which would solve the nearest neighbour problem in IR. That is given a document it wishes to find all nearest neighbours of that up to a given threshold. This algorithm also has the added benefit of only checking the same document once, even if indexed multiple times by multiple terms in the search query.
+The hopes of this paper was to develop an algorithm which would solve the nearest neighbour problem in IR. That is, given a document it wishes to find all nearest neighbours of that up to a given threshold. This algorithm also has the added benefit of only checking the same document once, even if indexed multiple times by multiple terms in the search query.
 
 I describe the algorithm below:
 
 Maintain two sets, \emph{R} and \emph{S}. \emph{R} contains all documents which are final candidates for the set of nearest neighbours. Where the maximum size of \emph{R} is given by the user (lets assume one for now). \emph{S} contains the set of all documents discovered so far whether in \emph{R} or not.
 
-Then given a query containing a set of search terms, order the terms based on the order of their increasing frequencies of occurrence within the entire document collection. Then add every document containing the term into \emph{S}, the nearest neighbour will be found among this set.
+Then given a query containing a set of search terms, order the terms based on the order of their increasing frequencies of occurrence within the entire document collection. Then add every document containing the term into \emph{S}, the nearest neighbour will be found amongst this set.
 
-By assuming that the number of co-occurrences of index terms between a document and a query is zero, then the similarity is zero, then it is possible to remove documents which are not indexed by at least one search term from the nearest neighbour search.
+By assuming that the number of co-occurrences of index terms between a document and a query is zero, then therefore the similarity is zero and it is then possible to remove documents which are not indexed by at least one search term from the nearest neighbour search.
 
 When checking each document found for a particular term, first check it is in \emph{S} and if it is not then calculate a similarity using one of the formula below and add it to \emph{S}.
 
@@ -101,22 +101,22 @@ Similarity Measures:
 \item Overlap
 \end{itemize}
 
-If the value returned is greater than the best value so far then this document becomes a candidate and is added to \emph{R}. After looking through each document for a given term it is then possible to calculate the maximum possible similarity value between among the documents which haven't been discovered yet. If this upper-bound that is calculated is less than the best value found so far then terminate.
+If the value returned is greater than the best value so far then this document becomes a candidate and is added to \emph{R}. After looking through each document for a given term it is then possible to calculate the maximum possible similarity value between the documents which haven't been discovered yet. If this upper-bound that is calculated is less than the best value found so far then terminate.
 
-This surprisingly fairly simple algorithm managed to save the number of document comparisons needed by about 50-60\%. It is important the document collection does affect the results as explained in the paper, however an average amount of comparisons needed of about 40\% was accepted.
+This surprisingly fairly simple algorithm managed to save the number of document comparisons needed by about 50-60\%. It is important to know that the document collection does affect the results as explained in the paper, however an average amount of comparisons needed of about 40\% for any document collection was accepted.
 
 \subsubsection{Filtered Document Retrieval with Frequency-Sorted Indexes}
 
-Persin et al. \cite{Persin:1996} aimed to determine which documents are more likely to be highly ranked by organizing the inverted file by descending term frequency. By doing this the test data used 2\% of memory that a standard implementation would, cpu and disk use was also reduced. This paper also showed that frequency sorting can decrease the index size regardless of compression used.
+Persin \emph{et al.} \cite{Persin:1996} aimed to determine which documents are more likely to be highly ranked by organizing the inverted file by descending term frequency. By doing this the test data used 2\% of memory that a standard implementation would, cpu and disk use was also reduced. This paper also showed that frequency sorting can decrease the index size regardless of compression used.
 
 This paper discusses two points:
 \begin{enumerate}
-\item Limiting size of accumulators
+\item Limiting the size of accumulators
 \item Sorting postings list by term frequency
 \end{enumerate}
 I will now describe the algorithm for limiting the number of documents in the accumulator:
 
-The query terms are first sorted by weight so that important terms are processed first. An insertion \emph{s$_{ins}$} and addition \emph{s$_{add}$} threshold are then calculated where \emph{s$_{add}$} <= \emph{s$_{ins}$}. As the postings list is processed for each term the partial similarity \emph{sim$_{q,d,t}$} of the term is compared to the thresholds. If \emph{sim$_{q,d,t}$} >= \emph{s$_{ins}$} then the document is likely to be important so \emph{sim$_{q,d,t}$} is added to the documents accumulator value (or one will be made). However if \emph{s$_{add}$} <= \emph{sim$_{q,d,t}$} < \emph{s$_{ins}$} then the document is probably not important but important enough to affect the outcome so \emph{sim$_{q,d,t}$} is added to the documents accumulator, or if no accumulator exists then nothing is done. And obviously if \emph{sim$_{q,d,t}$} < \emph{s$_{add}$} then it is not important and nothing is done. Where \emph{s$_{ins}$} = \emph{c$_{ins}$$^{.}$S$_{max}$} and \emph{S$_{add}$} = \emph{c$_{add}$$^{.}$S$_{max}$}.
+The query terms are first sorted by weight so that important terms are processed first. An insertion \emph{s$_{ins}$} and addition \emph{s$_{add}$} threshold are then calculated where \emph{s$_{add}$} <= \emph{s$_{ins}$}. As the postings list is processed for each term, the partial similarity \emph{sim$_{q,d,t}$} of the term is compared to the thresholds. If \emph{sim$_{q,d,t}$} >= \emph{s$_{ins}$} then the document is likely to be important so \emph{sim$_{q,d,t}$} is added to the documents accumulator value (or one will be made). However if \emph{s$_{add}$} <= \emph{sim$_{q,d,t}$} < \emph{s$_{ins}$} then the document is probably not important but important enough to affect the outcome so \emph{sim$_{q,d,t}$} is added to the documents accumulator, or if no accumulator exists then nothing is done. And obviously if \emph{sim$_{q,d,t}$} < \emph{s$_{add}$} then it is not important and nothing is done. Where \emph{s$_{ins}$} = \emph{c$_{ins}$$^{.}$S$_{max}$} and \emph{S$_{add}$} = \emph{c$_{add}$$^{.}$S$_{max}$}.
 
 The above basically means that if there a large number of documents with high similarity then looking at ones with low similarity is a waste of time and by having the \emph{S$_{ins}$} threshold we can avoid looking at some documents all together. These allow us to save cpu usage (as we no longer need to need look at some documents) and memory usage (fewer documents in the accumulators).
 
@@ -134,7 +134,7 @@ This set up was then run on the Wall Street Journal database and vast improvemen
 
 The relationship between the three papers described above is fairly obvious. The `main' aim of these papers is to minimize the number of documents that need to be examined to fulfill a query. 
 
-The first paper does this by running query independent heuristics and limiting the number of documents put in the postings list to begin with, filtering out documents likely to be of poor quality and then sorting them on a global BM25 ranking.
+The first paper does this by running query-independent heuristics and limiting the number of documents put in the postings list to begin with, filtering out documents likely to be of poor quality and then sorting them on a global BM25 ranking.
 
 The second does this by looking at the nearest neighbour problem in which it gets a threshold value and then stops processing the postings list if the next document is not greater than the value.
 
@@ -147,13 +147,13 @@ Below I describe two new ideas for possibly limiting the number of documents nee
 \section{Future Work}
 I have come up with two new possible solutions for minimizing the number of postings needing to be examined. 
 
-The first question I will pose is similar to Ferguson et al. in which I propose a new heuristic for removing or minimizing the ranking of web documents that have a high out-going-link-to-content ratio. 
+The first question I will pose is similar to Ferguson \emph{et al.} in which I propose a new heuristic for removing or minimizing the ranking of web documents that have a high out-going-link-to-content ratio. 
 
 The second question that I will propose is another web document heuristic in which I believe it would be beneficial if we were able to filter documents which have been created for the sole purpose of boosting search-engine-optimization. By removing these documents we limit the number of poor quality documents and also punish those for using techniques that are usually discouraged. 
 
 \subsection{Proposal One}
 
-As has been discussed previously, removing documents as early as possible which are not likely to affect our search results but can speed up our search is ideal. This is why I propose that when looking at documents from the web and deciding whether they should be added or not (such as by using the heuristics discussed in Ferguson et al., lowering the rank of pages that have a high content-to-outgoing-link ratio could be beneficial.
+As has been discussed previously, removing documents as early as possible which are not likely to affect our search results but can speed up our search is ideal. This is why I propose that when looking at documents from the web and deciding whether they should be added or not (such as by using the heuristics discussed in Ferguson \emph{et al.}, lowering the rank of pages that have a high content-to-outgoing-link ratio could be beneficial.
 
 The use case you could imagine is a page which contains a list of links to download a particular program. Due to some ranking functions these pages may get a higher ranking due to the number of out-going links in the document. I propose that having these documents ranked higher can affect what the user wants.
 
@@ -169,18 +169,18 @@ By doing this you would be more likely to be returned documents containing more 
 
 Following on from the approach above my next approach is to look at a mixture of the term-frequency and the proximity of the term. My idea is this, if a term is found multiple times (above some threshold) and is found within some small number of words away, and this formula happens multiple times in itself, then there is the possibility that this page has been specifically designed for search-engine-optimisation (SEO). There is also the likely possibility that they do not repeat the same word over and over but instead use synonyms, this means that the system would have to look up a thesaurus to check (adding overhead). If the system detects this pattern has occurred more times than some threshold then the page should be detected as solely used for SEO and discarded.
 
-Of course this approach can run into multiple problems, most search engines use these pages to detect good pages from the bad, \emph{i.e.} if it contains the word (or similar word) multiple times and within close proximity its probably on the subject and deemed to be important. This is why the system must be able to detect if the number of times this pattern appears is more frequent than other actual content.
+Of course this approach can run into multiple problems, most search engines use these techniques to detect good pages from the bad, \emph{i.e.} if it contains the word (or similar word) multiple times and within close proximity its probably on the subject and deemed to be important. This is why the system must be able to detect if the number of times this pattern appears is more frequent than other actual content.
 
 This approach definitely has some areas of concerns such as the added overhead of consulting a thesaurus and the possibility of discarding useful (if not possibly some of the top) documents. However I feel that with some investigation, useful threshold values may be found and then this would be a good technique for limiting the number of pages solely used to boost search-engine ranking.
 
 \section{Conclusions}
 In this paper I have shown three ways in which it is possible to reduce the number of documents that needs to be examined when answering a particular query. By minimizing the number of documents to process at query-time we save on memory, cpu and even disk usage. These combined can drastically improve performance and in some cases the quality of the documents returned. 
 
-Ferguson et al. took a query-independent approach to web documents by using a range of heuristics and Global BM25 sorting. Smeaton et al considered the problem of finding the nearest neighbour and limiting the number of documents it has to look at in the postings list. Finally Persin et al. took two approaches, the first being to minimize the number of accumulators by using some threshold values, and the second is to sort the postings list by term frequency and only taking the top part of the list thus reducing the number of postings traversed. 
+Ferguson \emph{et al.} took a query-independent approach to web documents by using a range of heuristics and Global BM25 sorting. Smeaton \emph{et al.} considered the problem of finding the nearest neighbour and limiting the number of documents it has to look at in the postings list. Finally Persin \emph{et al.} took two approaches, the first being to minimize the number of accumulators by using some threshold values, and the second is to sort the postings list by term frequency and only taking the top part of the list thus reducing the number of postings traversed. 
 
-I then proposed two new ways of limiting the number of documents needing examined, the first approach I propose is to look at link-to-content ratio and lower the ranking, or remove altogether, the documents in which (by some appropriate) there are more links than content. The second method I proposed is another heuristic for web documents in which it may be possible to remove documents that are solely used for search-engine-optimization. Removing documents would not only help remove the number of documents found but also punish those that are using SEO ranking techniques that are usually discouraged.
+I then proposed two new ways of limiting the number of documents needing examined, the first approach I propose is to look at link-to-content ratio and lower the ranking, or remove altogether, the documents in which (by some appropriate threshold) there are more out-going links than content. The second method I proposed is another heuristic for web documents in which it may be possible to remove documents that are solely used for search-engine-optimization. Removing documents would not only help remove the number of documents found but also punish those that are using SEO ranking techniques that are usually discouraged.
 
-So as you can see by removing the number of documents that we need to examine at query-time increases performance and in some cases the quality of documents returned. I believe this to be an important field as the number of documents continues to grow and with it the number of poorer quality documents and time it takes to process them.
+So as you can see by removing the number of documents that we need to examine at query-time increases performance and in some cases the quality of documents returned. I believe this to be an important field as the number of documents continues to grow and with it the number of poorer quality documents and the time it takes to process them.
 
 \bibliographystyle{abbrv}
 \bibliography{asgn2} 
